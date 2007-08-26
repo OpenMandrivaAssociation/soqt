@@ -1,7 +1,7 @@
 %define name soqt
 %define oname SoQt
 %define version 1.4.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 20
 %define libname %mklibname %name %major
