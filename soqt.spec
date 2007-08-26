@@ -1,7 +1,7 @@
 %define name soqt
 %define oname SoQt
-%define version 1.3.0
-%define release %mkrel 3
+%define version 1.4.1
+%define release %mkrel 1
 
 %define major 20
 %define libname %mklibname %name %major
@@ -12,7 +12,7 @@ Summary: SoQt interfaces Coin with the Qt GUI library
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: ftp://ftp.coin3d.org/pub/coin/src/%{oname}-%{version}.tar.bz2
+Source0: ftp://ftp.coin3d.org/pub/coin/src/%{oname}-%{version}.tar.gz
 Patch0:	soqt-lib.patch.bz2
 License: GPL
 Group: System/Libraries
