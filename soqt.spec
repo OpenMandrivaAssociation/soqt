@@ -13,7 +13,7 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: ftp://ftp.coin3d.org/pub/coin/src/%{oname}-%{version}.tar.gz
-Patch0:	soqt-lib.patch.bz2
+Patch0:	soqt-lib.patch
 License: GPL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-buildroot
