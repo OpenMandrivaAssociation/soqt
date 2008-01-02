@@ -16,6 +16,7 @@ Source0: ftp://ftp.coin3d.org/pub/coin/src/%{oname}-%{version}.tar.gz
 Patch0:	soqt-lib.patch
 License: GPL
 Group: System/Libraries
+BuildRoot: %{_tmppath}/%{name}-buildroot
 URL: http://www.coin3d.org/
 
 BuildRequires: coin-devel
