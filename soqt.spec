@@ -1,11 +1,11 @@
 %define name soqt
 %define oname SoQt
-%define version 1.4.1
-%define release %mkrel 6
+%define version 1.5.0
+%define release %mkrel 1
 
 %define major 20
 %define libname %mklibname %name %major
-%define libnamedev %mklibname %name %major -d
+%define libnamedev %mklibname %name -d
 
 
 Summary: SoQt interfaces Coin with the Qt GUI library
@@ -14,13 +14,12 @@ Version: %{version}
 Release: %{release}
 Source0: ftp://ftp.coin3d.org/pub/coin/src/%{oname}-%{version}.tar.gz
 Patch0:	soqt-lib.patch
-License: GPL
+License: GPLv2
 Group: System/Libraries
-BuildRoot: %{_tmppath}/%{name}-buildroot
 URL: http://www.coin3d.org/
 
 BuildRequires: coin-devel
-BuildRequires: kdelibs-devel
+BuildRequires: libqt4-devel
 
 %description 
 SoQt interfaces Coin with the Qt GUI library.
@@ -38,19 +37,14 @@ linked with SoQt.
 Summary: Headers for developing programs that will use SoQt
 Group: Development/C++
 Requires: %{libname} = %{version}
+Requires: coin-devel
+Requires: libqt4-devel
 Provides: %{name}-devel = %{version}-%{release}
 Provides: libsoqt-devel
 
 %description -n %{libnamedev}
 This package contains the headers that programmers will need to develop
 applications which will use SoQt.
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
 
 %prep
 %setup -q -n %oname-%version
@@ -60,16 +54,14 @@ applications which will use SoQt.
 
 %build
 
-export QTDIR=%{_prefix}/lib/qt3/
+QTDIR="%qt4dir"
+export QTDIR
 # export LDFLAGS=$QTDIR/%{_lib}
-%configure --disable-rpath
+%configure2_5x --disable-rpath
 %make
 
 %install
-%makeinstall
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+%makeinstall_std
 
 %files -n %{libname}
 %defattr(-,root,root,0755)
@@ -80,8 +72,11 @@ rm -rf $RPM_BUILD_ROOT
 %doc README FAQ AUTHORS NEWS
 %{_bindir}/*
 %{_libdir}/*.so
-%{_libdir}/*.la
+%{_libdir}/pkgconfig/SoQt.pc
 %{_includedir}/*
 %{_datadir}/Coin/conf/*
 %{_datadir}/aclocal/*
 %{_mandir}/man1/*
+%if %{mdkver} < 201200
+%{_libdir}/*.la
+%endif
