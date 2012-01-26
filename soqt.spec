@@ -41,6 +41,7 @@ Requires: coin-devel
 Requires: libqt4-devel
 Provides: %{name}-devel = %{version}-%{release}
 Provides: libsoqt-devel
+Obsoletes: %{_lib}soqt20-devel
 
 %description -n %{libnamedev}
 This package contains the headers that programmers will need to develop
