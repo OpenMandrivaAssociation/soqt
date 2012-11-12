@@ -1,0 +1,20 @@
+--- configure.bak	2007-08-26 22:24:24.000000000 +0200
++++ configure	2007-08-26 22:24:36.000000000 +0200
+@@ -27912,7 +27912,7 @@
+     # Or require the user to specify this explicitly, e.g. by
+     # passing --with-qt-framework=xxx? 20050802 kyrah.
+   else
+-    sim_ac_qt_framework_dir=$sim_ac_qtdir/lib
++    sim_ac_qt_framework_dir=$sim_ac_qtdir/lib64
+   fi
+ 
+ 
+@@ -28003,7 +28003,7 @@
+     sim_ac_QTDIR_ldflags=
+     if test -n "$sim_ac_qtdir"; then
+       sim_ac_QTDIR_cppflags="-I$sim_ac_qtdir/include"
+-      sim_ac_QTDIR_ldflags="-L$sim_ac_qtdir/lib"
++      sim_ac_QTDIR_ldflags="-L$sim_ac_qtdir/lib64"
+       CPPFLAGS="$sim_ac_QTDIR_cppflags $CPPFLAGS"
+       LDFLAGS="$LDFLAGS $sim_ac_QTDIR_ldflags"
+     fi
