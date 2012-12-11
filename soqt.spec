@@ -78,6 +78,3 @@ export QTDIR
 %{_datadir}/Coin/conf/*
 %{_datadir}/aclocal/*
 %{_mandir}/man1/*
-%if %{mdkver} < 201200
-%{_libdir}/*.la
-%endif
