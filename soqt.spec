@@ -19,7 +19,7 @@ Group: System/Libraries
 URL: http://www.coin3d.org/
 
 BuildRequires: coin-devel
-BuildRequires: libqt4-devel
+BuildRequires: pkgconfig(Qt3Support)
 
 %description 
 SoQt interfaces Coin with the Qt GUI library.
