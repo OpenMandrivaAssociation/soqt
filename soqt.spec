@@ -8,7 +8,7 @@
 %define libnamedev %mklibname %name -d
 
 
-Summary: SoQt interfaces Coin with the Qt GUI library
+Summary: Interfaces Coin with the Qt GUI library
 Name: %{name}
 Version: %{version}
 Release: %{release}
