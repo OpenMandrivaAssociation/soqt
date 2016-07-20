@@ -8,7 +8,7 @@
 Summary: Interfaces Coin with the Qt GUI library
 Name: soqt
 Version: 1.5.0
-Release: 5
+Release: 6
 Source0: ftp://ftp.coin3d.org/pub/coin/src/%{oname}-%{version}.tar.gz
 Patch0:	soqt-lib.patch
 License: GPLv2
@@ -57,7 +57,7 @@ sed -i 's!-Wchar-subscripts!!g' configure
 QTDIR="%qt4dir"
 export QTDIR
 # export LDFLAGS=$QTDIR/%{_lib}
-./configure --prefix=%{_prefix} --libdir=%{_libdir} \
+CC=%{__cc} CXX=%{__cxx} ./configure --prefix=%{_prefix} --libdir=%{_libdir} \
 	--disable-rpath --enable-optimization \
 	--enable-exceptions
 %make
