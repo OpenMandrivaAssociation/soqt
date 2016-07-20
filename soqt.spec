@@ -1,17 +1,14 @@
-%define name soqt
 %define oname SoQt
-%define version 1.5.0
-%define release   4
+%define _disable_rebuild_configure %nil
 
 %define major 20
 %define libname %mklibname %name %major
 %define libnamedev %mklibname %name -d
 
-
 Summary: Interfaces Coin with the Qt GUI library
-Name: %{name}
-Version: %{version}
-Release: %{release}
+Name: soqt
+Version: 1.5.0
+Release: 5
 Source0: ftp://ftp.coin3d.org/pub/coin/src/%{oname}-%{version}.tar.gz
 Patch0:	soqt-lib.patch
 License: GPLv2
@@ -52,13 +49,16 @@ applications which will use SoQt.
 %if "%{_lib}" == "lib64"
 %patch0
 %endif
+sed -i 's!-Wchar-subscripts!!g' configure
 
 %build
 
 QTDIR="%qt4dir"
 export QTDIR
 # export LDFLAGS=$QTDIR/%{_lib}
-%configure2_5x --disable-rpath
+./configure --prefix=%{_prefix} --libdir=%{_libdir} \
+	--disable-rpath --enable-optimization \
+	--enable-exceptions
 %make
 
 %install
