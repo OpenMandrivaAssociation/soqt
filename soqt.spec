@@ -52,6 +52,7 @@ applications which will use SoQt.
 sed -i 's!-Wchar-subscripts!!g' configure
 
 %build
+%config_update
 
 QTDIR="%qt4dir"
 export QTDIR
