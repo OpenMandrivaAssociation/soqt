@@ -16,6 +16,7 @@ URL:			http://www.coin3d.org/
 Patch0:         SoQt-1.6.0-pkgconf.patch
 Patch1:         SoQt-1.6.0-cmake.patch
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  cmake(coin4)
 
 %description
 SoQt, like Coin and Qt, provides the programmer with a high-level application
