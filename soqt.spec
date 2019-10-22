@@ -1,81 +1,70 @@
-%define oname SoQt
-%define _disable_rebuild_configure %nil
+%define tarname		SoQt
 
-%define major 20
-%define libname %mklibname %name %major
-%define libnamedev %mklibname %name -d
+%define major		20
+%define libname		%mklibname %name %major
+%define libnamedev	%mklibname %name -d
 
-Summary: Interfaces Coin with the Qt GUI library
-Name: soqt
-Version: 1.5.0
-Release: 6
-Source0: ftp://ftp.coin3d.org/pub/coin/src/%{oname}-%{version}.tar.gz
-Patch0:	soqt-lib.patch
-License: GPLv2
-Group: System/Libraries
-URL: http://www.coin3d.org/
+Summary:		Interfaces Coin with the Qt GUI library
+Name:			soqt
+Version:		1.6.0
+Release:		1
+Source0:	https://bitbucket.org/Coin3D/soqt/downloads/soqt-%{version}-src.zip
+License:		GPLv2
+Group:			System/Libraries
+URL:			http://www.coin3d.org/
 
-BuildRequires: coin-devel
-BuildRequires: pkgconfig(Qt3Support)
+Patch0:         SoQt-1.6.0-pkgconf.patch
+Patch1:         SoQt-1.6.0-cmake.patch
+BuildRequires:  qt5-qtbase-devel
 
-%description 
-SoQt interfaces Coin with the Qt GUI library.
+%description
+SoQt, like Coin and Qt, provides the programmer with a high-level application
+programmer's interface (API) in C++. The library primarily includes a
+class-hierarchy of viewer components of varying functionality and complexity,
+with various modes for the end-user to control the 3D-scene camera interaction.
 
 %package -n %{libname}
-Summary: Main library for SoQt
-Group: System/Libraries
-Provides: %{name} = %{version}-%{release}
+Summary:		Main library for SoQt
+Group:			System/Libraries
+Provides:		%{name} = %{version}-%{release}
 
 %description -n %{libname}
 This package contains the library needed to run programs dynamically
 linked with SoQt.
 
 %package -n %{libnamedev}
-Summary: Headers for developing programs that will use SoQt
-Group: Development/C++
-Requires: %{libname} = %{version}
-Requires: coin-devel
-Requires: libqt4-devel
-Provides: %{name}-devel = %{version}-%{release}
-Provides: libsoqt-devel
-Obsoletes: %{_lib}soqt20-devel
+Summary:		Headers for developing programs that will use SoQt
+Group:			Development/C++
+Requires:		%{libname} = %{version}-%{release}
+Provides:		%{name}-devel = %{version}-%{release}
+Provides:		%{tarname}-devel = %{version}-%{release}
+Obsoletes:		%{_lib}soqt20-devel < 1.5.0-4
 
 %description -n %{libnamedev}
 This package contains the headers that programmers will need to develop
 applications which will use SoQt.
 
 %prep
-%setup -q -n %oname-%version
-%if "%{_lib}" == "lib64"
-%patch0
-%endif
-sed -i 's!-Wchar-subscripts!!g' configure
+%autosetup -p1 -n soqt
 
 %build
-%config_update
-
-QTDIR="%qt4dir"
-export QTDIR
-# export LDFLAGS=$QTDIR/%{_lib}
-CC=%{__cc} CXX=%{__cxx} ./configure --prefix=%{_prefix} --libdir=%{_libdir} \
-	--disable-rpath --enable-optimization \
-	--enable-exceptions
-%make
+%cmake
+%make_build
 
 %install
-%makeinstall_std
+%make_install -C build
+
+#we don't want these
+find %{buildroot} -name "*.la" -delete
 
 %files -n %{libname}
-%defattr(-,root,root,0755)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}
+%{_libdir}/libSoQt.so.%{version}*
 
 %files -n %{libnamedev}
-%defattr(-,root,root,0755)
 %doc README FAQ AUTHORS NEWS
-%{_bindir}/*
 %{_libdir}/*.so
-%{_libdir}/pkgconfig/SoQt.pc
 %{_includedir}/*
-%{_datadir}/Coin/conf/*
-%{_datadir}/aclocal/*
-%{_mandir}/man1/*
+%{_libdir}/pkgconfig/*.pc
+%{_datadir}/SoQt/materials/
+%{_libdir}/cmake/SoQt-%{version}/*.cmake
