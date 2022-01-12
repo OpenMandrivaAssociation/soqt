@@ -8,15 +8,15 @@ Summary:		Interfaces Coin with the Qt GUI library
 Name:			soqt
 Version:		1.6.0
 Release:		1
-Source0:	https://bitbucket.org/Coin3D/soqt/downloads/soqt-%{version}-src.zip
+Source0:		https://github.com/coin3d/soqt/releases/download/SoQt-%{version}/soqt-%{version}-src.tar.gz
 License:		GPLv2
 Group:			System/Libraries
-URL:			http://www.coin3d.org/
+URL:			http://coin3d.github.io/
 
-Patch0:         SoQt-1.6.0-pkgconf.patch
 Patch1:         SoQt-1.6.0-cmake.patch
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  cmake(coin4)
+BuildRequires:	cmake ninja
 
 %description
 SoQt, like Coin and Qt, provides the programmer with a high-level application
@@ -47,16 +47,15 @@ applications which will use SoQt.
 
 %prep
 %autosetup -p1 -n soqt
+%cmake -G Ninja
 
 %build
-%cmake
-%make_build
+%ninja_build -C build
 
 %install
-%make_install -C build
-
-#we don't want these
-find %{buildroot} -name "*.la" -delete
+%ninja_install -C build
+# Whatever this is, it's not an info page
+rm -rf %{buildroot}%{_infodir}
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}
@@ -67,5 +66,5 @@ find %{buildroot} -name "*.la" -delete
 %{_libdir}/*.so
 %{_includedir}/*
 %{_libdir}/pkgconfig/*.pc
-%{_datadir}/SoQt/materials/
+%{_datadir}/SoQt
 %{_libdir}/cmake/SoQt-%{version}/*.cmake
