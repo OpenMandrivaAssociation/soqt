@@ -11,7 +11,7 @@ Release:		1
 Source0:		https://github.com/coin3d/soqt/releases/download/SoQt-%{version}/soqt-%{version}-src.tar.gz
 License:		GPLv2
 Group:			System/Libraries
-URL:			http://coin3d.github.io/
+URL:			https://coin3d.github.io/
 
 Patch1:         SoQt-1.6.0-cmake.patch
 BuildRequires:  qt5-qtbase-devel
